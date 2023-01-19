@@ -4,7 +4,7 @@ import com.permadeathcore.Main;
 import com.sk89q.worldedit.EditSession;
 import com.sk89q.worldedit.WorldEdit;
 import com.sk89q.worldedit.WorldEditException;
-import com.sk89q.worldedit.bukkit.BukkitWorld;
+import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldedit.extent.clipboard.Clipboard;
 import com.sk89q.worldedit.extent.clipboard.io.ClipboardFormat;
 import com.sk89q.worldedit.extent.clipboard.io.ClipboardFormats;
@@ -118,7 +118,8 @@ public class BeginningGenerator extends ChunkGenerator {
             return;
         }
 
-        try (EditSession editSession = WorldEdit.getInstance().getEditSessionFactory().getEditSession(new BukkitWorld(world), -1)) {
+
+        try (EditSession editSession = WorldEdit.getInstance().getEditSessionFactory().getEditSession(BukkitAdapter.adapt(world), -1)) {
             Operation operation = new ClipboardHolder(clipboard)
                     .createPaste(editSession)
                     .to(BlockVector3.at(x, HEIGHT + 20, z))
@@ -143,8 +144,7 @@ public class BeginningGenerator extends ChunkGenerator {
             e.printStackTrace();
             return;
         }
-
-        try (EditSession editSession = WorldEdit.getInstance().getEditSessionFactory().getEditSession(new BukkitWorld(world), -1)) {
+        try (EditSession editSession = WorldEdit.getInstance().getEditSessionFactory().getEditSession(BukkitAdapter.adapt(world), -1)) {
             ClipboardHolder clipboardHolder = new ClipboardHolder(clipboard);
 
             Operation operation = clipboardHolder

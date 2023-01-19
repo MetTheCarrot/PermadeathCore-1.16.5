@@ -322,7 +322,6 @@ public class PlayerEvents implements Listener {
             instance.world.playSound(playerbed, Sound.ENTITY_GENERIC_EXPLODE, 1.0F, 1.0F);
             instance.world.spawnParticle(Particle.EXPLOSION_HUGE, playerbed, 1);
 
-            Messages
             if (Main.getInstance().getDays() >= 50) {
                 if (new SplittableRandom().nextInt(100) + 1 <= 10) {
 
@@ -510,53 +509,15 @@ public class PlayerEvents implements Listener {
                 if (!player.isOnline()) return;
 
                 player.sendMessage(Main.format("&e&m-------------------------------------------"));
-                player.sendMessage(Main.format("        &c&lPERMA&7&lDEATH &4&lCORE"));
-                player.sendMessage(Main.format("&7Servidor InfernalCore (Servidor original del Plugin): discord.gg/InfernalCore"));
-                player.sendMessage(Main.format(" "));
-                player.sendMessage(Main.format("&b&l - Servidor de Discord con soporte del Desarrollador: -"));
-                player.sendMessage(Main.format("&7Forma parte de nuestra comunidad, no solo damos soporte,"));
-                player.sendMessage(Main.format("&7jugamos juegos, nos divertimos y también hay plugins adicionales."));
-                player.sendMessage(Main.format("&7Se ofrece soporte oficial del desarrollador del Plugin."));
-                player.sendMessage(Main.format(" "));
-                player.sendMessage(Main.format("&e&nInvitación a Discord&r&7 (soporte, noticias y proyectos):"));
-                player.sendMessage(Main.format("&cNota: este no es el mismo Discord que InfernalCore."));
-                player.sendMessage(Main.format("&9https://discord.gg/w58wzrcJU8"));
+                player.sendMessage(Main.format("        &c&lPERMA&7&lDEATH &4&lCORE 1.16.5"));
                 player.sendMessage(Main.format("&e&m-------------------------------------------"));
                 if (!Main.isOptifineEnabled()) player.sendMessage(Main.format("&cRecuerda aceptar los paquetes de Recursos para ver los ítems y texturas personalizadas."));
                 player.sendMessage(Main.tag + Main.format("&eEjecuta el comando &f&l/pdc &r&epara más información."));
 
-                if (sendingTitle) {
-                    player.sendTitle(Main.format("&c&lPERMA&7&lDEATH &4&lCORE"), Main.format("&7Twitter: &b@SebazCRC"), 1, 20*5, 1);
-                    player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 100.0F, 100.0F);
-                }
             }
         }, 20*15);
 
-        Bukkit.getScheduler().runTaskLater(instance, new Runnable() {
-            @Override
-            public void run() {
-                if (player == null) return;
-                if (!player.isOnline()) return;
-                if (sendingTitle) {
-                    player.sendTitle(Main.format("&c&lPERMA&7&lDEATH &4&lCORE"), Main.format("&7Discord: &9https://discord.gg/8evPbuxPke"), 1, 20*5, 1);
-                    player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 100.0F, 100.0F);
-                }
-            }
-        }, 20*20);
-
         if (!Main.isOptifineEnabled()) player.setResourcePack("https://www.dropbox.com/s/h3v77ga72l9vhpg/PermaDeathCore%20RP%20v1.2.zip?dl=1");
-
-        if (player.isOp()) {
-            player.sendMessage(instance.tag + instance.format("&eSi tienes algún problema puedes unirte a nuestro discord, enlace con: &9/pdc discord"));
-            new UpdateChecker(Main.getInstance()).getVersion(version -> {
-                if (Main.getInstance().getDescription().getVersion().equalsIgnoreCase(version)) {
-                    player.sendMessage(Main.getInstance().format(tag + "&3Estás utilizando la versión más reciente del Plugin."));
-                } else {
-                    player.sendMessage(Main.getInstance().format(tag + "&3Se ha encontrado una nueva versión del Plugin"));
-                    player.sendMessage(Main.getInstance().format(tag + "&eDescarga en: &7http://permadeathcore.com/"));
-                }
-            });
-        }
 
         if (instance.getDays() >= 50) {
 
@@ -570,6 +531,7 @@ public class PlayerEvents implements Listener {
             }
         }
 
+        try{
         if (instance.getBeginningManager() != null) {
             if (instance.getBeginningManager().getBeginningWorld() != null) {
 
@@ -586,6 +548,9 @@ public class PlayerEvents implements Listener {
                     instance.getBeginningManager().getBeginningWorld().setSpawnLocation(new Location(instance.getBeginningManager().getBeginningWorld(), 50, 140, 50));
                 }
             }
+        }
+        } catch(Exception ex) {
+            ex.printStackTrace();
         }
     }
 

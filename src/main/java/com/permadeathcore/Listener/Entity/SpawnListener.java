@@ -41,6 +41,8 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
 
+import static com.permadeathcore.Main.format;
+
 public class SpawnListener implements Listener{
 
     private Main plugin;
@@ -423,7 +425,7 @@ public class SpawnListener implements Listener{
             if (entity.getType() == EntityType.SPIDER) {
                 event.setCancelled(true);
                 plugin.getNmsHandler().spawnNMSEntity("CaveSpider", EntityType.CAVE_SPIDER, event.getLocation(), CreatureSpawnEvent.SpawnReason.NATURAL);
-                entity.setCustomName(plugin.format("&6Araña inmortal"));
+                entity.setCustomName(format("&6Araña inmortal"));
             }
 
             if (entity.getType() == EntityType.ZOMBIE) {
@@ -442,13 +444,13 @@ public class SpawnListener implements Listener{
 
             if (eventEntityType == EntityType.CAT || eventEntityType == EntityType.OCELOT) {
                 if (plugin.getDays() < 50) {
-                    entity.setCustomName(plugin.format("&6Gato Supernova"));
+                    entity.setCustomName(format("&6Gato Supernova"));
                     explodeCat(entity);
                 } else {
                     if (event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.CUSTOM) {
                         explodeCat(event.getEntity());
                     } else {
-                        event.getEntity().setCustomName(plugin.format("&6Gato Galáctico"));
+                        event.getEntity().setCustomName(format("&6Gato Galáctico"));
                     }
                 }
             }
@@ -462,13 +464,18 @@ public class SpawnListener implements Listener{
                 }
 
                 if (plugin.getDays() >= 50) {
-                    event.setCancelled(true);
-                    Ravager ultraRavager = (Ravager) plugin.getNmsHandler().spawnNMSCustomEntity("PigmanJockeys.UltraRavager", EntityType.RAVAGER, event.getLocation(), CreatureSpawnEvent.SpawnReason.CUSTOM);
-                    ultraRavager.setCustomName(plugin.format("&6Ultra Ravager"));
-                    ultraRavager.setCustomNameVisible(true);
-                    ultraRavager.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 1));
-                    ultraRavager.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1));
-                    plugin.getNmsAccesor().setMaxHealth(ultraRavager, 500.0D, true);
+                    try {
+                        event.setCancelled(true);
+                        Ravager ultraRavager = (Ravager) plugin.getNmsHandler().spawnNMSCustomEntity("PigmanJockeys.UltraRavager", EntityType.RAVAGER, event.getLocation(), CreatureSpawnEvent.SpawnReason.CUSTOM);
+
+                        ultraRavager.setCustomName(format("&6Ravager Ultra"));
+                        ultraRavager.setCustomNameVisible(true);
+                        ultraRavager.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 1));
+                        ultraRavager.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1));
+                        plugin.getNmsAccesor().setMaxHealth(ultraRavager, 500.0D, true);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
 
@@ -489,7 +496,7 @@ public class SpawnListener implements Listener{
                 entity.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 1));
                 plugin.getNmsAccesor().setMaxHealth(entity, entity.getHealth() * 2, true);
 
-                entity.setCustomName(plugin.format("&6Bruja Imposible"));
+                entity.setCustomName(format("&6Bruja Imposible"));
             }
         }
 
@@ -513,7 +520,7 @@ public class SpawnListener implements Listener{
                 Cod cod = (Cod) entity;
                 cod.getEquipment().setItemInMainHand(new ItemBuilder(Material.WOODEN_SWORD).addEnchant(Enchantment.DAMAGE_ALL, 50).addEnchant(Enchantment.KNOCKBACK, 100).build());
                 cod.getEquipment().setItemInMainHandDropChance(0.0f);
-                cod.setCustomName(plugin.format("&6Bacalao de la Muerte"));
+                cod.setCustomName(format("&6Bacalao de la Muerte"));
             }
 
             if (entity.getType() == EntityType.DROWNED) {
@@ -529,7 +536,7 @@ public class SpawnListener implements Listener{
 
             if (entity.getType() == EntityType.PUFFERFISH) {
                 PufferFish fish = (PufferFish) entity;
-                fish.setCustomName(plugin.format("&6Pufferfish invulnerable"));
+                fish.setCustomName(format("&6Pufferfish invulnerable"));
                 fish.setInvulnerable(true);
             }
 
@@ -544,7 +551,7 @@ public class SpawnListener implements Listener{
 
                     plugin.getNmsAccesor().setMaxHealth(skeleton, 80.0D, true);
 
-                    skeleton.setCustomName(plugin.format("&6Wither Skeleton Emperador"));
+                    skeleton.setCustomName(format("&6Wither Skeleton Emperador"));
                     skeleton.setCollidable(false);
 
                     ItemStack i = new ItemStack(Material.BLACK_BANNER, 1);
@@ -614,7 +621,7 @@ public class SpawnListener implements Listener{
                     if (entity.getWorld().getName().equalsIgnoreCase(plugin.world.getName())) {
 
                         Ravager ultraRavager = (Ravager) plugin.getNmsHandler().spawnNMSCustomEntity("PigmanJockeys.UltraRavager", EntityType.RAVAGER, event.getLocation(), CreatureSpawnEvent.SpawnReason.CUSTOM);
-                        ultraRavager.setCustomName(plugin.format("&6Ultra Ravager"));
+                        ultraRavager.setCustomName(format("&6Ultra Ravager"));
                         ultraRavager.setCustomNameVisible(true);
                         ultraRavager.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 1));
                         ultraRavager.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1));
@@ -666,7 +673,7 @@ public class SpawnListener implements Listener{
 
         if (plugin.getDays() >= 40 && plugin.getDays() < 50) {
             for (LivingEntity cats : Arrays.stream(e.getChunk().getEntities()).filter(entity -> isACat(entity)).map(LivingEntity.class::cast).collect(Collectors.toList())) {
-                cats.setCustomName(plugin.format("&6Gato Supernova"));
+                cats.setCustomName(format("&6Gato Supernova"));
                 explodeCat(cats);
             }
 
@@ -674,7 +681,7 @@ public class SpawnListener implements Listener{
                 Cat cat = wolf.getWorld().spawn(wolf.getLocation().clone(), Cat.class);
                 wolf.remove();
                 cat.setAdult();
-                cat.setCustomName(plugin.format("&6Gato Supernova"));
+                cat.setCustomName(format("&6Gato Supernova"));
                 explodeCat(cat);
             }
         }
@@ -685,65 +692,69 @@ public class SpawnListener implements Listener{
     }
 
     public void applyDayChanges(LivingEntity entity) {
+        try {
 
-        if (plugin.getDays() >= 30) {
-            if (entity instanceof Squid) {
-                entity.remove();
-                Guardian g = (Guardian) entity.getWorld().spawnEntity(entity.getLocation(), EntityType.GUARDIAN);
-                g.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 1));
-            }
-            if (entity instanceof Bat) {
-                entity.remove();
-                Blaze g = (Blaze) entity.getWorld().spawnEntity(entity.getLocation(), EntityType.BLAZE);
-                g.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1));
-            }
-        }
-
-        if (plugin.getDays() >= 40) {
-            if (entity instanceof Cow || entity instanceof Sheep || entity instanceof Pig || entity instanceof MushroomCow) {
-                if (!entity.getLocation().getWorld().getName().equalsIgnoreCase(plugin.world.getName())) return;
-
-                if (plugin.getDays() < 50 && plugin.getDays() >= 40) {
+            if (plugin.getDays() >= 30) {
+                if (entity instanceof Squid) {
                     entity.remove();
-                    plugin.getNmsHandler().spawnNMSEntity("Ravager", EntityType.RAVAGER, entity.getLocation(), CreatureSpawnEvent.SpawnReason.NATURAL);
+                    Guardian g = (Guardian) entity.getWorld().spawnEntity(entity.getLocation(), EntityType.GUARDIAN);
+                    g.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 1));
                 }
-
-                if (plugin.getDays() >= 50) {
+                if (entity instanceof Bat) {
                     entity.remove();
-                    Ravager ultraRavager = (Ravager) plugin.getNmsHandler().spawnNMSCustomEntity("PigmanJockeys.UltraRavager", EntityType.RAVAGER, entity.getLocation(), CreatureSpawnEvent.SpawnReason.CUSTOM);
-                    ultraRavager.setCustomName(plugin.format("&6Ultra Ravager"));
-                    ultraRavager.setCustomNameVisible(true);
-                    ultraRavager.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 1));
-                    ultraRavager.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1));
-                    plugin.getNmsAccesor().setMaxHealth(ultraRavager, 500.0D, true);
+                    Blaze g = (Blaze) entity.getWorld().spawnEntity(entity.getLocation(), EntityType.BLAZE);
+                    g.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1));
                 }
             }
 
-            if (entity instanceof Chicken) {
+            if (plugin.getDays() >= 40) {
+                if (entity instanceof Cow || entity instanceof Sheep || entity instanceof Pig || entity instanceof MushroomCow) {
+                    if (!entity.getLocation().getWorld().getName().equalsIgnoreCase(plugin.world.getName())) return;
 
-                if (plugin.getDays() < 50 && plugin.getDays() >= 40) {
-                    entity.remove();
-                    plugin.getNmsHandler().spawnNMSEntity("Ravager", EntityType.RAVAGER, entity.getLocation(), CreatureSpawnEvent.SpawnReason.NATURAL);
-                    return;
+                    if (plugin.getDays() < 50 && plugin.getDays() >= 40) {
+                        entity.remove();
+                        plugin.getNmsHandler().spawnNMSEntity("Ravager", EntityType.RAVAGER, entity.getLocation(), CreatureSpawnEvent.SpawnReason.NATURAL);
+                    }
+
+                    if (plugin.getDays() >= 50) {
+                        entity.remove();
+                        Ravager ultraRavager = (Ravager) plugin.getNmsHandler().spawnNMSCustomEntity("PigmanJockeys.UltraRavager", EntityType.RAVAGER, entity.getLocation(), CreatureSpawnEvent.SpawnReason.CUSTOM);
+                        ultraRavager.setCustomName(format("&6Ultra Ravager"));
+                        ultraRavager.setCustomNameVisible(true);
+                        ultraRavager.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 1));
+                        ultraRavager.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1));
+                        plugin.getNmsAccesor().setMaxHealth(ultraRavager, 500.0D, true);
+                    }
                 }
 
-                if (plugin.getDays() >= 50) {
-                    entity.getLocation().getWorld().spawnEntity(entity.getLocation(), EntityType.SILVERFISH);
+                if (entity instanceof Chicken) {
+
+                    if (plugin.getDays() < 50 && plugin.getDays() >= 40) {
+                        entity.remove();
+                        plugin.getNmsHandler().spawnNMSEntity("Ravager", EntityType.RAVAGER, entity.getLocation(), CreatureSpawnEvent.SpawnReason.NATURAL);
+                        return;
+                    }
+
+                    if (plugin.getDays() >= 50) {
+                        entity.getLocation().getWorld().spawnEntity(entity.getLocation(), EntityType.SILVERFISH);
+                        entity.remove();
+                    }
+                }
+            }
+
+            if (plugin.getDays() >= 60) {
+                if (entity.getType() == EntityType.VILLAGER) {
+
+                    if (random.nextBoolean()) {
+                        entity.getWorld().spawn(entity.getLocation(), Vex.class);
+                    } else {
+                        entity.getWorld().spawn(entity.getLocation(), Vindicator.class);
+                    }
                     entity.remove();
                 }
             }
-        }
-
-        if (plugin.getDays() >= 60) {
-            if (entity.getType() == EntityType.VILLAGER) {
-
-                if (random.nextBoolean()) {
-                    entity.getWorld().spawn(entity.getLocation(), Vex.class);
-                } else {
-                    entity.getWorld().spawn(entity.getLocation(), Vindicator.class);
-                }
-                entity.remove();
-            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
     private void addMobEffects(LivingEntity entity, int force) {
@@ -931,7 +942,7 @@ public class SpawnListener implements Listener{
                 mainHand = buildItem(Material.BOW).build();
 
                 armorDropChance = 0.0f;
-                name = plugin.format("&6Ultra Esqueleto Demoníaco");
+                name = format("&6Ultra Esqueleto Demoníaco");
                 id = "demon_skeleton";
 
                 health = 100.0D;
@@ -977,7 +988,7 @@ public class SpawnListener implements Listener{
 
         if (mainHand != null) eq.setItemInMainHand(mainHand);
         if (offHand != null) eq.setItemInOffHand(offHand);
-        if (!name.isEmpty()) skeleton.setCustomName(plugin.format(name));
+        if (!name.isEmpty()) skeleton.setCustomName(format(name));
         if (!id.isEmpty()) skeleton.getPersistentDataContainer().set(new NamespacedKey(plugin, id), PersistentDataType.BYTE, (byte) 1);
         setMaxHealth(skeleton, health);
         skeleton.setHealth(health);
@@ -1086,7 +1097,7 @@ public class SpawnListener implements Listener{
         if (!chunk.isForceLoaded()) chunk.setForceLoaded(true);
         if (!chunk.isLoaded()) chunk.load();
 
-        Bukkit.broadcastMessage(plugin.format("&cUn gato supernova va a explotar en: " + loc.getBlockX() + " " + loc.getBlockY() + " " + loc.getBlockZ() +" (" + cat.getWorld().getName() + ")."));
+        Bukkit.broadcastMessage(format("&cUn gato supernova va a explotar en: " + loc.getBlockX() + " " + loc.getBlockY() + " " + loc.getBlockZ() +" (" + cat.getWorld().getName() + ")."));
         Bukkit.getServer().getScheduler().runTaskLater(plugin, new Runnable() {
             @Override
             public void run() {
@@ -1172,14 +1183,14 @@ public class SpawnListener implements Listener{
 
                     if (gatosSupernova.contains(event.getEntity())) gatosSupernova.remove(event.getEntity());
                     if (event.getEntity().getCustomName() == null) return;
-                    if (event.getEntity().getCustomName().contains(plugin.format("&6Gato Gal"))) {
+                    if (event.getEntity().getCustomName().contains(format("&6Gato Gal"))) {
 
                         Location l = event.getEntity().getLocation();
                         int x = (int) l.getX();
                         int y = (int) l.getY();
                         int z = (int) l.getZ();
 
-                        Bukkit.broadcastMessage(plugin.format("&cLa maldición de un Gato Galáctico ha comenzado en: " + x + ", " + y + ", " + z));
+                        Bukkit.broadcastMessage(format("&cLa maldición de un Gato Galáctico ha comenzado en: " + x + ", " + y + ", " + z));
                         new GatoGalacticoTask(event.getEntity().getLocation(), plugin).runTaskTimer(plugin, 0, 20L);
                     }
                 }
@@ -1215,7 +1226,7 @@ public class SpawnListener implements Listener{
                 if (event.getEntity() instanceof Ravager) {
                     Ravager ravager = (Ravager) event.getEntity();
                     if (ravager.getCustomName() == null) return;
-                    if (ravager.getCustomName().contains(plugin.format("&6Ultra Ravager"))) {
+                    if (ravager.getCustomName().contains(format("&6Ultra Ravager"))) {
                         if (ravager.getWorld().getEnvironment() != World.Environment.NETHER) {
                             event.getDrops().clear();
                         } else {
@@ -1229,12 +1240,12 @@ public class SpawnListener implements Listener{
 
             if (plugin.getDays() < 60 && plugin.getDays() >= 50) {
                 if (event.getEntity().getType() == EntityType.GIANT) {
-                    event.getDrops().add(new ItemBuilder(Material.BOW).setDisplayName(plugin.format("&bArco de Gigante")).addEnchant(Enchantment.ARROW_DAMAGE, 10).build());
+                    event.getDrops().add(new ItemBuilder(Material.BOW).setDisplayName(format("&bArco de Gigante")).addEnchant(Enchantment.ARROW_DAMAGE, 10).build());
                 }
 
                 if (event.getEntity().getType() == EntityType.WITHER_SKELETON) {
                     if (event.getEntity().getCustomName() == null) return;
-                    if (event.getEntity().getCustomName().contains(plugin.format("&6Wither Skeleton Emperador"))) {
+                    if (event.getEntity().getCustomName().contains(format("&6Wither Skeleton Emperador"))) {
 
                         if (plugin.getDays() < 60) {
                             int prob = (int) (Math.random() * 100) + 1;
@@ -1346,7 +1357,7 @@ public class SpawnListener implements Listener{
                 skeleton.getEquipment().setBootsDropChance(0);
                 skeleton.getEquipment().setItemInMainHandDropChance(0);
 
-                skeleton.setCustomName(plugin.format("&6Wither Skeleton Rosáceo"));
+                skeleton.setCustomName(format("&6Wither Skeleton Rosáceo"));
                 skeleton.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 2));
                 plugin.getNmsAccesor().setMaxHealth(skeleton, 100.0D, true);
             }
@@ -1358,13 +1369,13 @@ public class SpawnListener implements Listener{
                 vex.getEquipment().setHelmetDropChance(0);
                 vex.getEquipment().setItemInMainHandDropChance(0);
 
-                vex.setCustomName(plugin.format("&6Vex Definitivo"));
+                vex.setCustomName(format("&6Vex Definitivo"));
             }
 
             if (p > 75 && p <= 79) {
                 Ghast ghast = (Ghast) plugin.getNmsHandler().spawnCustomGhast(e.getLocation().add(0, 5, 0), CreatureSpawnEvent.SpawnReason.CUSTOM, true);
                 plugin.getNmsAccesor().setMaxHealth(ghast, 150.0D, true);
-                ghast.setCustomName(plugin.format("&6Ender Ghast Definitivo"));
+                ghast.setCustomName(format("&6Ender Ghast Definitivo"));
             }
 
             if (p >= 80) {

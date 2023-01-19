@@ -9,7 +9,7 @@ import java.util.LinkedHashSet;
 
 public class CustomCreeper extends EntityCreeper {
 
-    private boolean isEnderCreeper;
+    private final boolean isEnderCreeper;
 
     public CustomCreeper(EntityTypes<? extends EntityCreeper> type, World world, boolean isE) {
         super(type, world);

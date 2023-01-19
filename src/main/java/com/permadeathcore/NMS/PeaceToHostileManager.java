@@ -1,8 +1,6 @@
 package com.permadeathcore.NMS;
 
 import com.permadeathcore.Main;
-import com.permadeathcore.NMS.VersionManager;
-import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
@@ -12,9 +10,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.world.ChunkLoadEvent;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.Random;
 
 public class PeaceToHostileManager implements Listener {
 

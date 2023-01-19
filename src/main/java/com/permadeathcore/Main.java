@@ -108,8 +108,6 @@ public final class Main extends JavaPlugin implements Listener {
     private SpawnListener spawnListener;
     private SplittableRandom r = new SplittableRandom();
 
-    private boolean fo
-
     @Override
     public void onEnable() {
         instance = this;
@@ -168,14 +166,7 @@ public final class Main extends JavaPlugin implements Listener {
 
                 if (!loaded) {
 
-                    if (Bukkit.getPluginManager().getPlugin("JDASpigot") != null) {
-                        Bukkit.getConsoleSender().sendMessage(format(tag +"&aSe ha encontrado JDASpigot, cargando bot de Discord."));
-                        DiscordManager.getInstance();
-                    } else {
-                        Bukkit.getConsoleSender().sendMessage(format(tag + "&cNo se ha encontrado JDASpigot, es necesario para utilizar el bot de Discord."));
-                        Bukkit.getConsoleSender().sendMessage(format("&eDescarga aquí: &fhttps://www.dropbox.com/s/qdtqgfgv51lvag4/JDASpigot.jar?dl=0"));
-                        Bukkit.getConsoleSender().sendMessage(format("&eSi no puedes descargarlo allí, únete a este Discord y te daremos acceso al enlace: &ehttps://discord.gg/8evPbuxPke"));
-                    }
+                    DiscordManager.getInstance();
 
                     startPlugin();
                     setupConfig();
@@ -596,15 +587,6 @@ public final class Main extends JavaPlugin implements Listener {
             return;
         }
 
-        new UpdateChecker(this).getVersion(version -> {
-            if (this.getDescription().getVersion().equalsIgnoreCase(version)) {
-                Bukkit.getConsoleSender().sendMessage(format("&7> &bEstado de Actualización: &aVersión más reciente."));
-            } else {
-                Bukkit.getConsoleSender().sendMessage(format("&7> &eNueva versión detectada."));
-                Bukkit.getConsoleSender().sendMessage(format("&7> &aDescarga: &7http://permadeathcore.com/"));
-            }
-        });
-
         registerChanges();
         generateOfflinePlayerData();
 
@@ -896,8 +878,7 @@ public final class Main extends JavaPlugin implements Listener {
     }
 
     public static String format(String texto) {
-
-        return ChatColor.translateAlternateColorCodes('&', texto);
+        return texto.replace("&", "§");
     }
 
     public Messages getMessages() {

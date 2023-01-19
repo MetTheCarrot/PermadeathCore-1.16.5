@@ -5,7 +5,6 @@ import com.permadeathcore.Main;
 import org.bukkit.*;
 import org.bukkit.entity.Creeper;
 import org.bukkit.entity.Entity;
-import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
